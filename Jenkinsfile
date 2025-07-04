@@ -1,22 +1,18 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven 3.9.4'
+        jdk 'Temurin-17'
+    }
     stages {
-        stage('Build with Maven') {
+        stage('Build') {
             steps {
-                script {
-                    docker.image('maven:3.9.4-eclipse-temurin-17').inside {
-                        sh 'mvn clean package -DskipTests'
-                    }
-                }
+                sh 'mvn clean package -DskipTests'
             }
         }
         stage('Test') {
             steps {
-                script {
-                    docker.image('maven:3.9.4-eclipse-temurin-17').inside {
-                        sh 'mvn test'
-                    }
-                }
+                sh 'mvn test'
             }
         }
     }
